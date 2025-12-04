@@ -109,7 +109,6 @@ impl MipmapGen {
             let mut pass = cmd.begin_render_pass(&wgpu::RenderPassDescriptor {
                 label: None,
                 color_attachments: &[Some(wgpu::RenderPassColorAttachment {
-                    depth_slice: None,
                     view: &views[target_mip],
                     resolve_target: None,
                     ops: wgpu::Operations {

@@ -173,9 +173,14 @@ impl Context<'_> {
                     adapter.request_device(&wgpu::DeviceDescriptor {
                         required_features: features,
                         ..Default::default()
-                    }),
+                    }, None),
                 ) {
-                    result = Some((device_result.0, device_result.1, supports_f16_val));
+                    // NOTE: SHADER_F16 feature with naga shaders was available since wgpu 25.
+                    // <https://github.com/gfx-rs/wgpu/blob/trunk/CHANGELOG.md#v2500-2025-04-10>.
+                    // So the workaround is to disable it for wgpu 24 here.
+                    //result = Some((device_result.0, device_result.1, supports_f16_val));
+                    let _ = supports_f16_val;
+                    result = Some((device_result.0, device_result.1, false));
                     break;
                 }
             }
@@ -190,6 +195,7 @@ impl Context<'_> {
                         required_limits: wgpu::Limits::downlevel_webgl2_defaults(),
                         ..Default::default()
                     },
+                    None,
                 ))
                 .expect("Request device");
                 (device_result.0, device_result.1, false)

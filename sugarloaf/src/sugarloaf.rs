@@ -416,7 +416,6 @@ impl Sugarloaf<'_> {
                             color_attachments: &[Some(wgpu::RenderPassColorAttachment {
                                 view: &view,
                                 resolve_target: None,
-                                depth_slice: None,
                                 ops: wgpu::Operations {
                                     load,
                                     store: wgpu::StoreOp::Store,
@@ -452,7 +451,6 @@ impl Sugarloaf<'_> {
                             occlusion_query_set: None,
                             label: Some("visual_bell"),
                             color_attachments: &[Some(wgpu::RenderPassColorAttachment {
-                                depth_slice: None,
                                 view: &view,
                                 resolve_target: None,
                                 ops: wgpu::Operations {
